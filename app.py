@@ -7,42 +7,43 @@ from flask import Flask, request, jsonify, render_template, url_for
 #from django.shortcuts import render
 
 
-# Load Data
+# Load Data into df object df
 df = pd.read_csv('heart.csv')
 
-# Load Model : teste es in model.pkl umzubenennen 
-with open('./model_C=0.01.bin', 'rb') as f_in:
-    (sc, lr) = pickle.load(f_in)
+# Load objects sc and lr
+with open('./model.pkl', 'rb') as f_in:
+    sc, lr = pickle.load(f_in)
 
 
-# Create Flask Application
-app = Flask('heartsick')
-
-# # Homepage
-# @app.route('/')
-# def home():
-#     return render_template('home.html')
+# Create Flask Application object 
+app = Flask(__name__)
 
 
-# Predict API
-@app.route('/predict_api', methods=['POST']) # the adress of the function (endpoint)
+#Homepate of Flask App
+@app.route('/')
+def home():
+    return render_template('home.html')
+
+
+# API Endpoint
+@app.route('/predict_api', methods=['POST']) 
 def predict_api():
 
     inp = request.get_json()
-
     arr = np.array(list(inp.values())).reshape(1, -1)
     patient_t = sc.transform(arr)
-    y_pred = lr.predict_proba(patient_t)[0,1]
-    doc = bool(y_pred>0.5)
+    y_pred = lr.predict_proba(patient_t)[0,1] # get positive class
+    doc = bool(y_pred > 0.5)
 
     result = {
         'Probability of Heartsickness': y_pred,
-        'Send to Doctor': doc
+        #'Send to Doctor': doc
     }
 
-    # turn patient into json object
+    # turn result into json object
     return jsonify(result)
 
 # Run App
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=9696) # not a local host but 0000 to serve all clients
+
