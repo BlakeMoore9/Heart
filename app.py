@@ -29,21 +29,33 @@ def home():
 @app.route('/predict_api', methods=['POST']) 
 def predict_api():
 
-    inp = request.get_json()
-    arr = np.array(list(inp.values())).reshape(1, -1)
+    data = request.get_json()
+    arr = np.array(list(data.values())).reshape(1, -1)
     patient_t = sc.transform(arr)
     y_pred = lr.predict_proba(patient_t)[0,1] # get positive class
     doc = bool(y_pred > 0.5)
-
+    y_pred = y_pred.round(3)
     result = {
         'Probability of Heartsickness': y_pred,
-        #'Send to Doctor': doc
+        'Send to Doctor': doc
     }
 
     # turn result into json object
     return jsonify(result)
 
+@app.route('/predict', methods=['POST'])
+def predict():
+
+    data = [float(x) for x in request.form.values()]
+    arr = np.array(data).reshape(1, -1)
+    patient_t = sc.transform(arr)
+    y_pred = lr.predict_proba(patient_t)[0,1] # get positive class
+    y_pred = y_pred.round(3)
+    return render_template("home.html", prediction_text = "The Probability of Heart Disease is {}.".format(y_pred))
+
+
 # Run App
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=9696) # not a local host but 0000 to serve all clients
+
 
