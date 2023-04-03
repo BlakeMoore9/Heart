@@ -1,0 +1,130 @@
+<style>
+    /* Make Form */
+    form {
+      background-color: #fffcfc;
+      padding: 20px;
+      border-radius: 5px;
+      max-width: 500px;
+      margin-left: 0;
+    }
+  
+    /* Style textinput area */
+    input[type=text], textarea {
+        background-color: #ffedf9;
+        padding: 10px;
+        border-radius: 5px;
+        border: none;
+        font-family: 'Georgia';
+        font-size: 16px;
+        margin-bottom: 15px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    /* Style Button*/
+    .btn-primary {
+        border-radius: 10px;
+        color: rgb(15, 15, 15);
+        background-color: rgb(216, 156, 213);
+        font-family: 'Georgia';
+        font-size:large;
+        border-radius: 10px;
+        padding: 10px
+        }
+
+    /* Style the form labels */
+    label {
+      display: block;
+      font-family: 'Georgia';
+      font-weight: bold;
+      margin-bottom: 5px;
+      color: #0f0f0f;
+    }
+
+    /* Style the page title */
+    h1 {
+      font-family: 'Georgia';
+      font-size: 36px;
+      text-align: left;
+      margin-top: 50px;
+      color: #353536;
+    }
+    
+    /* Style the prediction class */
+    .prediction {
+        font-size: 30px;
+        font-weight: bold;
+        color: #2f302f;
+        margin-top: 5px;
+        display: flex;
+        justify-content: left;
+        align-items: flex-start;
+}
+  </style>
+
+
+<head>
+    <meta charset="UTF-8">
+    <title>ML API for Heart Disease</title>
+    <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+</head>
+
+  <body
+    style="background-color: rgb(255, 226, 254);">
+    <div class="login">
+    <h1>Heart Attack Prediction</h1>
+  
+    <form action="{{ url_for('predict')}}" method="post">
+        <label for="age">Age</label>
+        <input type="text" id="age" name="age" placeholder="Enter your age" required="required" value="56"/><br>
+        
+        <label for="sex">Sex</label>
+        <input type="text" id="sex" name="sex" placeholder="Enter your sex" required="required" value="1"/><br>
+        
+        <label for="cp">Chest Pain Type</label>
+        <input type="text" id="cp" name="cp" placeholder="Enter your chest pain" required="required" value="1"/><br>
+        
+        <label for="trestbps">Resting Blood Pressure</label>
+        <input type="text" id="trestbps" name="trestbps" placeholder="Enter your resting blood pressure" required="required" value="120"/><br>
+        
+        <label for="chol">Cholesterol</label>
+        <input type="text" id="chol" name="chol" placeholder="Enter your cholesterol" required="required" value="236"/><br>
+        
+        <label for="fbs">Fasting Blood Sugar</label>
+        <input type="text" id="fbs" name="fbs" placeholder="Enter your fasting blood sugar" required="required" value="0" /><br>
+        
+        <label for="restecg">Resting Electrocardiographic Results</label>
+        <input type="text" id="restecg" name="restecg" placeholder="Enter your resting electrocardiographic results" required="required" value="1"/><br>
+        
+        <label for="thalach">Maximum Heart Rate Achieved</label>
+        <input type="text" id="thalach" name="thalach" placeholder="Enter your maximum heart rate achieved" required="required" value="178" /><br>
+        
+        <label for="exang">Exercise Induced Angina</label>
+        <input type="text" id="exang" name="exang" placeholder="Enter your exercise induced angina" required="required" value="0"/><br>
+        
+        <label for="oldpeak">ST Depression Induced by Exercise Relative to Rest</label>
+        <input type="text" id="oldpeak" name="oldpeak" placeholder="Enter your ST depression induced by exercise relative to rest" required="required" value="0.8" />
+        
+        <label for="slope">ST Segment</label>
+        <input type="text" id="slope" name="slope" placeholder="Enter slope " required="required" value="2"/><br>
+
+        <label for="ca">Number of Carotic Arteries</label>
+        <input type="text" id="ca" name="ca" placeholder="Enter Fluoroscopy " required="required" value="0"/><br>
+
+        <label for="thal">Thalium Stress Test</label>
+        <input type="text" id="thal" name="thal" placeholder="Enter Thalach " required="required" value="2"/><br>
+        
+        <button type="submit" class="btn btn-primary btn-block btn-large">Predict</button>
+        </form>
+    
+  </div>
+  <output class="prediction">{{ prediction_text }}</output>
+
+  <br>
+  <br>
+  <br>
+  <br>
+ </body>
