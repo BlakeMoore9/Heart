@@ -17,7 +17,7 @@ EXPOSE 9696
 # Run the app.py (second one) in the dir app
 # binding Port to local IP address
 CMD gunicorn --workers=4 --bind 0.0.0.0:9696 app:app
-
+# ENTRYPOINT [...runApp(port=80,host='0.0.0.0')] this is the same, or is it?
 
 
 
