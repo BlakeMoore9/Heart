@@ -22,10 +22,10 @@ app = Flask(__name__)
 #Homepate of Flask App
 @app.route('/')
 def home():
-    return render_template('home.html')
+    return render_template('test.html')
 
 
-# API Endpoint
+# API Endpoint for prediction from notebook
 @app.route('/predict_api', methods=['POST']) 
 def predict_api():
 
@@ -43,6 +43,9 @@ def predict_api():
     # turn result into json object
     return jsonify(result)
 
+
+
+# Homepage with Form to predict heart disease
 @app.route('/predict', methods=['POST'])
 def predict():
 
@@ -51,7 +54,7 @@ def predict():
     patient_t = sc.transform(arr)
     y_pred = lr.predict_proba(patient_t)[0,1] # get positive class
     y_pred = y_pred.round(3)
-    return render_template("home.html", prediction_text = "The Probability of Heart Disease is {}.".format(y_pred))
+    return render_template("test.html", prediction_text = f"The Probability of Heart Disease for this Patient is {y_pred}.")
 
 
 # Run App
